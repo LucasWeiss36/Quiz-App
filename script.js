@@ -1,3 +1,5 @@
+
+let rightQuestions = 0;
 let currentQuestion = 0;
 
 function init() {
@@ -9,34 +11,37 @@ function showQuestion() {
 
 
     if (currentQuestion >= questions.length){
-        document.getElementById("question-container").innerHTML = `
-        <img class="endimg object-fit-contain" src="img/brain result.png" alt="">
-        <h5 class="d-flex justify-content-center p-3">COMPLETE <br> HTML QUIZ</h5>
-        <div class="p-3 d-flex justify-content-center">
-          <span class="me-">YOUR SCORE</span>
-          <span>10/10</span>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-        <button class="btn btn-primary w-25">SHARE</button>
-        <button class="btn text-primary w-25">REPLAY</button>
-        </div>`;
-        
+      document.getElementById("end-container").style = '';
+      //entfernt den Style display none vom end-container
+      document.getElementById("question-container").style = "display: none!important";
+      //fügt den Style display none dem question-container hinzu
+
+      document.getElementById("amount-of-questions").innerHTML = questions.length; 
+      // zeigt im end-container an wie viele fragen vorhanden sind 
+      document.getElementById("amount-of-right-questions").innerHTML = rightQuestions;
+      //zeigt im end-container an wie viele fragen richtig sind  
+      
     }else{
+      let percent = (currentQuestion + 1) / questions.length;
+      percent = Math.round(percent * 100);
+      document.getElementById("progress-bar").innerHTML = `${percent}%`
+      document.getElementById("progress-bar").style = `width: ${percent}%`
+
         document.getElementById("current-question").innerHTML = currentQuestion + 1;
         // zeigt im Element der id current-question die aktuelle Frage an (1 weil currentQuestion = 0, 0+1=1)
         let question = questions[currentQuestion];
         // die Variable currentQuestion hat den Wert 0 definiert
         // geht in questions rein und nimmt den Wert 0(weil currentQuestion=0) heraus
-      document.getElementById("questiontext").innerHTML = question["question"];
-      //geht in questions[0]['question']und der wert wird bei id questiontext eingefügt("Wer hat HTML erfunden?")
-      document.getElementById("answer_1").innerHTML = question["answer_1"];
-      //geht in questions[0]['answer_1']und der wert wird bei id answer_1 eingefügt("Robbie Williams")
-      document.getElementById("answer_2").innerHTML = question["answer_2"];
-      //geht in questions[0]['answer_2']und der wert wird bei id answer_2 eingefügt("Lady Gaga")
-      document.getElementById("answer_3").innerHTML = question["answer_3"];
-      //geht in questions[0]['answer_3']und der wert wird bei id answer_3 eingefügt("Tim Berners-Lee")
-      document.getElementById("answer_4").innerHTML = question["answer_4"];
-      //geht in questions[0]['answer_4']und der wert wird bei id answer_4 eingefügt("Justin Bieber")
+        document.getElementById("questiontext").innerHTML = question["question"];
+        //geht in questions[0]['question']und der wert wird bei id questiontext eingefügt("Wer hat HTML erfunden?")
+        document.getElementById("answer_1").innerHTML = question["answer_1"];
+        //geht in questions[0]['answer_1']und der wert wird bei id answer_1 eingefügt("Robbie Williams")
+        document.getElementById("answer_2").innerHTML = question["answer_2"];
+        //geht in questions[0]['answer_2']und der wert wird bei id answer_2 eingefügt("Lady Gaga")
+        document.getElementById("answer_3").innerHTML = question["answer_3"];
+        //geht in questions[0]['answer_3']und der wert wird bei id answer_3 eingefügt("Tim Berners-Lee")
+        document.getElementById("answer_4").innerHTML = question["answer_4"];
+        //geht in questions[0]['answer_4']und der wert wird bei id answer_4 eingefügt("Justin Bieber")
     }
 }
 
@@ -53,6 +58,8 @@ function answer(selection) {
       //Wenn selectedQuestionNumber(1) == 3
       document.getElementById(selection).parentNode.classList.add("bg-success");
       //dann parentElement der id selection(answer_3) die Klasse bg-success hinzufügen
+      rightQuestions++;
+      // fügt der Variable +1 hinzu 
   } else {
     //ansonsten parentElement der id selection(answer_1/answer_2/answer_4) die Klasse bg-danger hinzufügen
     //& parentElement der id idOfRightAnswer(answer_3) die Klasse bg-success hinzufügen
