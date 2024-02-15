@@ -32,3 +32,7 @@ body {
   .bg-success, .bg-danger{
     color: white !important;
   }
+
+  .endimg{
+    height: 120px;
+  }
